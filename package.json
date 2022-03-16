@@ -1,0 +1,17 @@
+{
+  "name": "cli-backup",
+  "version": "0.0.1",
+  "description": "Interactive CLI to backup files from external storage",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "Steven Kalinke",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "cron": "^1.8.2",
+    "dotenv": "^16.0.0",
+    "inquirer": "^8.2.0",
+    "rsync": "^0.6.1"
+  }
+}
