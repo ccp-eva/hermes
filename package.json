@@ -1,8 +1,10 @@
 {
   "name": "cli-backup",
+  "private": true,
   "version": "0.0.1",
   "description": "Interactive CLI to backup files from external storage",
-  "main": "index.js",
+  "main": "backup.js",
+  "bin": "./index.js",
   "type": "module",
   "keywords": [],
   "author": "Steven Kalinke",
@@ -11,7 +13,9 @@
     "chalk": "^5.0.0",
     "cron": "^1.8.2",
     "dotenv": "^16.0.0",
+    "fluent-ffmpeg": "^2.1.2",
     "inquirer": "^8.2.0",
+    "nanospinner": "^1.0.0",
     "rsync": "^0.6.1"
   }
 }
