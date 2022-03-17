@@ -31,7 +31,10 @@ async function handleAnswer(response) {
   if (response === 'Backup & Video Compression') {
     console.log('Start Backup');
 
+    const spinner = createSpinner();
+    spinner.start({ text: 'Start Backup...💾' });
     await backup();
+    spinner.success({ text: 'Backup Complete 🎉' });
 
     console.log('Backup done!');
     console.log('Start Video Compression');
