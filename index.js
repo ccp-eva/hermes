@@ -30,7 +30,9 @@ await question1();
 async function handleAnswer(response) {
   if (response === 'Backup & Video Compression') {
     console.log('Start Backup');
-    backup();
+
+    await backup();
+
     console.log('Backup done!');
     console.log('Start Video Compression');
     await doffmpeg();

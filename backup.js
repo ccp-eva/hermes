@@ -1,25 +1,29 @@
 import 'dotenv/config';
 import Rsync from 'rsync';
-import fs from 'fs';
 import { createDateDirectory } from './createDateDir.js';
 
-export const backup = async () => {
-  const targetPath = createDateDirectory();
+export function backup() {
+  const rsync = new Rsync();
+  rsync.flags('avzP');
+  rsync.source(process.env.SOURCE_DIR);
+  rsync.destination(createDateDirectory());
 
-  const rsync = new Rsync()
-    // The -a flag means "archive" to say we are copying the full directory not just a file
-    .flags('a')
-    .source(process.env.SOURCE_DIR)
-    .destination(targetPath);
-
-  const startSync = () => {
-    rsync.execute((error, code, cmd) => {
-      // List of rsync status codes
-      // https://stackoverflow.com/a/20738063
-      console.log('backup completed with status code: ' + code);
-    });
-  };
-
-  // Begin sync
-  startSync();
-};
+  return new Promise((resolve, reject) => {
+    try {
+      let logData = '';
+      rsync.execute(
+        (error, code, cmd) => {
+          resolve({ error, code, cmd, data: logData });
+        },
+        // (data) => {
+        //   logData += data;
+        // },
+        (err) => {
+          logData += err;
+        }
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
