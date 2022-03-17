@@ -29,16 +29,13 @@ await question1();
 
 async function handleAnswer(response) {
   if (response === 'Backup & Video Compression') {
-    console.log('Start Backup');
-
     const spinner = createSpinner();
     spinner.start({ text: 'Start Backup...💾' });
     await backup();
     spinner.success({ text: 'Backup Complete 🎉' });
 
-    console.log('Backup done!');
-    console.log('Start Video Compression');
+    spinner.start({ text: 'Start ffmpeg...🎬' });
     await doffmpeg();
-    console.log('Video Compression done!');
+    spinner.success({ text: 'ffmpeg done 🎉' });
   }
 }
