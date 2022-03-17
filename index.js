@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-// import { welcome } from './welcome.js';
-import { backup } from './backup.js';
-import { doffmpeg } from './doffmpeg.js';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { createSpinner } from 'nanospinner';
+// import { welcome } from './welcome.js';
+import { backup } from './backup.js';
+import { doffmpeg } from './doffmpeg.js';
 
 console.clear();
 
