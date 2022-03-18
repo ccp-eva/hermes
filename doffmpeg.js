@@ -16,8 +16,18 @@ export const doffmpeg = () => {
   return new Promise((resolve, reject) => {
     // target dir becomes source dir for ffmpeg
 
+    //  ffmpeg -i out-25.mp4 -c:v libx265 -an -x265-params crf=38 output-h265-38.mp4
+    // ffmpeg -i Azibo\ 22_06.MTS -c:v libx265 -crf 38 -preset fast -c:a aac -b:a 128k output-265-crf-38a.mp4
+
     ffmpeg(sourceDir + 'Azibo22_06.MTS')
-      .outputOptions(['-an'])
+      .outputOptions([
+        `-c:v ${process.env.VIDEO_CODEC}`,
+        `-crf ${process.env.CRF}`,
+        `-preset ${process.env.PRESET}`,
+        `-c:a ${process.env.AUDIO_CODEC}`,
+        `-b:a ${process.env.AUDIO_BITRATE}`,
+        '-tag:v hvc1', // apple-complient; https://trac.ffmpeg.org/wiki/Encode/H.265
+      ])
       .save(targetDir + 'out.mp4')
       .on('start', function (ffmpegCommand) {
         // console.log('Start', ffmpegCommand);
