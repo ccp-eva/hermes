@@ -10,11 +10,11 @@ import { checkSourceDir } from './checkSourceDir.js';
 
 console.clear();
 
-// run prechecks and get source directory as in .env
-const directoryCollection = checkSourceDir();
-
 // iso 8601 date string without time (YYYY-MM-DD)
 global.today = new Date().toISOString().substring(0, 10);
+
+// run prechecks and get source directory as in .env
+const directoryCollection = checkSourceDir();
 
 console.log(chalk.blue.bold('CCP Backup & Video Compression') + ` — ${today}`);
 
@@ -50,10 +50,15 @@ async function handleAnswer(response) {
     await backup(directoryCollection.videoPaths);
     spinner.success({ text: 'Backup Complete 🎉' });
 
-    // directoryCollection.videoFilePaths.forEach((vid, i) => {
-    spinner.start({ text: 'Start Video Conversion...🎬' });
-    await doffmpeg(directoryCollection.videoFilePaths[0]);
-    spinner.success({ text: 'Conversion done 🎉' });
-    // });
+    const subSpinner = createSpinner();
+    for (const [i, vid] of directoryCollection.videoFilePathsTarget.entries()) {
+      subSpinner.start({
+        text: `Video ${i + 1} of ${
+          directoryCollection.videoFilePathsTarget.length
+        }`,
+      });
+      await doffmpeg(vid);
+      subSpinner.success({ text: 'Done' });
+    }
   }
 }
