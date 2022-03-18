@@ -2,10 +2,10 @@ import 'dotenv/config';
 import Rsync from 'rsync';
 import { createDateDirectory } from './createDateDir.js';
 
-export function backup() {
+export const backup = (videoPaths) => {
   const rsync = new Rsync();
   rsync.flags('avzP');
-  rsync.source(process.env.SOURCE_DIR);
+  rsync.source(videoPaths);
   rsync.destination(createDateDirectory());
 
   return new Promise((resolve, reject) => {
@@ -26,4 +26,4 @@ export function backup() {
       reject(error);
     }
   });
-}
+};
