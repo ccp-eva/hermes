@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import ffmpeg from 'fluent-ffmpeg';
 import fs from 'fs';
+import path from 'path';
 
-export const doffmpeg = (video) => {
+export const doffmpeg = (inputVideo) => {
   const targetDir = process.env.CLOUD_DIR + today + '/';
+  const baseFilename = path.parse(inputVideo).name;
 
   // check if directory exists
   if (!fs.existsSync(targetDir)) {
@@ -11,7 +13,7 @@ export const doffmpeg = (video) => {
   }
 
   return new Promise((resolve, reject) => {
-    ffmpeg(video)
+    ffmpeg(inputVideo)
       .outputOptions([
         `-c:v ${process.env.VIDEO_CODEC}`,
         `-crf ${process.env.CRF}`,
@@ -20,7 +22,7 @@ export const doffmpeg = (video) => {
         `-b:a ${process.env.AUDIO_BITRATE}`,
         '-tag:v hvc1', // apple-complient; https://trac.ffmpeg.org/wiki/Encode/H.265
       ])
-      .save(targetDir + video)
+      .save(targetDir + baseFilename + '.mp4')
       .on('start', function (ffmpegCommand) {
         // console.log('Start', ffmpegCommand);
       })
