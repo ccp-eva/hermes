@@ -50,10 +50,19 @@ export const checkSourceDir = () => {
     });
   });
 
+  // anticipate target file paths
+  const videoFilePathsTarget = [];
+  videoFilePaths.forEach((file) => {
+    videoFilePathsTarget.push(
+      file.replace(process.env.SOURCE_DIR, process.env.TARGET_DIR + today + '/')
+    );
+  });
+
   return {
     videoFolders,
     videoPaths,
     videoFiles,
     videoFilePaths,
+    videoFilePathsTarget,
   };
 };
