@@ -6,27 +6,33 @@ import { createSpinner } from 'nanospinner';
 // import { welcome } from './welcome.js';
 import { backup } from './backup.js';
 import { doffmpeg } from './doffmpeg.js';
-import { checkSourceDir } from './checkSourceDir.js';
+import { checkDirectories } from './checkDirectories.js';
 
 console.clear();
 
 // iso 8601 date string without time (YYYY-MM-DD)
 global.today = new Date().toISOString().substring(0, 10);
 
-// run prechecks and get source directory as in .env
-const directoryCollection = checkSourceDir();
+console.log(
+  chalk.blue.bold('CCP Backup & Video Compression') +
+    ` ${chalk.dim('— Today’s Timestamp: ' + today)}`
+);
 
-console.log(chalk.blue.bold('CCP Backup & Video Compression') + ` — ${today}`);
+// run prechecks and get source directory as in .env
+const directoryCollection = checkDirectories();
+
+createSpinner().success({ text: 'Source directory found!' });
+createSpinner().success({ text: 'Target directory found!' });
 
 console.log(
   '\n',
-  chalk.bold.italic(
-    'Video folders at source location:',
-    directoryCollection.videoFolders.length
+  chalk.dim(
+    'Found Video folders at source location:',
+    directoryCollection.videoFolders.length,
+    directoryCollection.videoFolders,
+    '\n',
+    'Folders contain: ' + directoryCollection.videoFiles.length + ' videos.'
   ),
-  directoryCollection.videoFolders,
-  '\n',
-  `...containing: ${directoryCollection.videoFiles.length} files total.`,
   '\n\n'
 );
 
