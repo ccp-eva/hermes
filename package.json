@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "description": "Interactive CLI to backup files from external storage",
-  "main": "backup.js",
+  "main": "index.js",
   "bin": "./index.js",
   "type": "module",
   "keywords": [],
