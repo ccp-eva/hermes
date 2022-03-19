@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
-import chalk from 'chalk';
-import { createSpinner } from 'nanospinner';
-// import { welcome } from './welcome.js';
-import { backup } from './backup.js';
-import { doffmpeg } from './doffmpeg.js';
-import { checkDirectories } from './checkDirectories.js';
+import { fullProcess } from './fullProcess.js';
 
 console.clear();
 
@@ -49,22 +44,7 @@ async function question1() {
 await question1();
 
 async function handleAnswer(response) {
-  if (response === 'Backup & Video Compression') {
-    const spinner = createSpinner();
-
-    spinner.start({ text: 'Start Backup...💾' });
-    await backup(directoryCollection.videoPaths);
-    spinner.success({ text: 'Backup Complete 🎉' });
-
-    const subSpinner = createSpinner();
-    for (const [i, vid] of directoryCollection.videoFilePathsTarget.entries()) {
-      subSpinner.start({
-        text: `Video ${i + 1} of ${
-          directoryCollection.videoFilePathsTarget.length
-        }`,
-      });
-      await doffmpeg(vid);
-      subSpinner.success({ text: 'Done' });
-    }
+  if (response === choices[0]) {
+    await fullProcess();
   }
 }
