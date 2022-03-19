@@ -11,7 +11,6 @@ const mainChoices = [
   '  Single Steps',
   'Parity Check (Target and Cloud)',
   'Upload Parity List',
-  'Update Script',
   'Exit',
 ];
 
@@ -50,5 +49,11 @@ async function handleAnswer(response) {
 
   if (response === mainChoices[1]) {
     await singleSteps();
+  }
+
+  if (response === mainChoices[2]) {
+  }
+
+  if (response === mainChoices[3]) {
   }
 }
