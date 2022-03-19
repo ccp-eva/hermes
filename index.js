@@ -6,43 +6,26 @@ import { fullProcess } from './fullProcess.js';
 
 global.globals = init();
 
-// iso 8601 date string without time (YYYY-MM-DD)
-global.today = new Date().toISOString().substring(0, 10);
+const choices = [
+  'Backup, Clean Source Directory, Video Compression',
+  '  Single Steps (Backup Clean Source Directory (SD Card), Video Compression (if Target contains videos not in Cloud)',
+  'Parity Check (Target and Cloud)',
+  'Upload Parity List',
+  'Update Script',
+  'Exit',
+];
 
-console.log(
-  chalk.blue.bold('CCP Backup & Video Compression') +
-    ` ${chalk.dim('— Today’s Timestamp: ' + today)}`
-);
-
-// run prechecks and get source directory as in .env
-const directoryCollection = checkDirectories();
-
-createSpinner().success({ text: 'Source directory found!' });
-createSpinner().success({ text: 'Target directory found!' });
-
-console.log(
-  '\n',
-  chalk.dim(
-    'Found Video folders at source location:',
-    directoryCollection.videoFolders.length,
-    directoryCollection.videoFolders,
-    '\n',
-    'Folders contain: ' + directoryCollection.videoFiles.length + ' videos.'
-  ),
-  '\n\n'
-);
-
-async function question1() {
+async function question() {
   const answer = await inquirer.prompt({
     type: 'list',
-    name: 'question_1',
-    message: 'What do want to do next?\n',
-    choices: ['Backup & Video Compression', 'Video Compression', 'Exit'],
+    name: 'question',
+    message: 'What do want to do?\n',
+    choices,
   });
 
-  return handleAnswer(answer.question_1);
+  return handleAnswer(answer.question);
 }
-await question1();
+await question();
 
 async function handleAnswer(response) {
   if (response === choices[0]) {
