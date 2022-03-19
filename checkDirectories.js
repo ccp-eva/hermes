@@ -3,14 +3,44 @@ import path from 'path';
 import chalk from 'chalk';
 import 'dotenv/config';
 
-export const checkSourceDir = () => {
+export const checkDirectories = () => {
   if (!fs.existsSync(process.env.SOURCE_DIR)) {
     console.error(
       `${chalk.white.bgRed.bold('I cannot find the directory:')} ${
         process.env.SOURCE_DIR
       }
     
-    ${chalk.bold('Is the SD card mounted?')}
+    ${chalk.bold('Is the SD card mounted?\n')}
+    
+    ${chalk.bold('Is the path correct in .env?')}
+    `
+    );
+
+    process.exit(0);
+  }
+
+  if (!fs.existsSync(process.env.TARGET_DIR)) {
+    console.error(
+      `${chalk.white.bgRed.bold('I cannot find the directory:')} ${
+        process.env.TARGET_DIR
+      }
+    
+    ${chalk.bold('Is the external hard drived mounted?\n')}
+    
+    ${chalk.bold('Is the path correct in .env?')}
+    `
+    );
+
+    process.exit(0);
+  }
+
+  if (!fs.existsSync(process.env.CLOUD_DIR)) {
+    console.error(
+      `${chalk.white.bgRed.bold('I cannot find the directory:')} ${
+        process.env.CLOUD_DIR
+      }
+    
+    ${chalk.bold('Is the path correct in .env?')}
     `
     );
 
