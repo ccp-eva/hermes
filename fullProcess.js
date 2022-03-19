@@ -2,6 +2,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { createSpinner } from 'nanospinner';
 import { backup } from './backup.js';
+import { getVideoFilePathsTarget } from './getVideoFilePathsTarget.js';
 import { doffmpeg } from './doffmpeg.js';
 
 export const fullProcess = async () => {
@@ -23,14 +24,19 @@ export const fullProcess = async () => {
     chalk.dim('\n  === Compress videos from external drive to cloud')
   );
 
+  // get target file paths and file names
+  const videoFilePathsTarget = getVideoFilePathsTarget(
+    process.env.TARGET_DIR + today + '/'
+  );
+
   const subSpinner = createSpinner();
-  for (const [i, vid] of globals.videoFilePathsTarget.entries()) {
+  for (const [i, vid] of videoFilePathsTarget.entries()) {
     subSpinner.start({
-      text: `Video ${i + 1} of ${globals.videoFilePathsTarget.length}`,
+      text: `Video ${i + 1} of ${videoFilePathsTarget.length}`,
     });
     await doffmpeg(vid);
     subSpinner.success({
-      text: `Video ${i + 1} of ${globals.videoFilePathsTarget.length} 🎉`,
+      text: `Video ${i + 1} of ${videoFilePathsTarget.length} 🎉`,
     });
   }
 };

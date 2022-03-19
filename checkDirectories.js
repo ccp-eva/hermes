@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import chalk from 'chalk';
 import 'dotenv/config';
 
@@ -29,15 +28,15 @@ export const checkDirectories = () => {
     .map((dir) => process.env.SOURCE_DIR + dir + '/');
 
   // search for DCIM folders within subSourceDirs
-  let dcimDir = [];
+  let dcimDirPath = [];
   subSourceDirs.forEach((dir) => {
     if (fs.existsSync(dir + 'DCIM/')) {
-      dcimDir.push(dir + 'DCIM/');
+      dcimDirPath.push(dir + 'DCIM/');
     }
   });
 
   // if there are multiple folders report a warning
-  if (dcimDir.length > 1) {
+  if (dcimDirPath.length > 1) {
     console.error(
       chalk.yellow.bold('WARNING\n\n') +
         'Multiple DCIM folders found! ' +
@@ -49,7 +48,7 @@ export const checkDirectories = () => {
     process.exit(0);
   }
 
-  dcimDir = dcimDir[0];
+  dcimDirPath = dcimDirPath[0];
 
   if (!fs.existsSync(process.env.TARGET_DIR)) {
     console.error(
@@ -81,14 +80,14 @@ export const checkDirectories = () => {
 
   // get all video folder matching the pattern defined in .env
   const videoFolders = fs
-    .readdirSync(dcimDir)
+    .readdirSync(dcimDirPath)
     .filter((i) => i.includes(process.env.VIDEO_DIR_PATTERN));
 
   if (videoFolders.length === 0) {
     console.error(
       `I cannot find any directories containing: '${
         process.env.VIDEO_DIR_PATTERN
-      }' at ${dcimDir}
+      }' at ${dcimDirPath}
     
     ${chalk.bold('Is your SD card empty?')}
 
@@ -101,7 +100,7 @@ export const checkDirectories = () => {
     process.exit(0);
   }
 
-  const videoPaths = videoFolders.map((i) => dcimDir + i);
+  const videoPaths = videoFolders.map((i) => dcimDirPath + i);
 
   const videoFilePaths = [];
   const videoFiles = [];
@@ -113,18 +112,19 @@ export const checkDirectories = () => {
   });
 
   // anticipate target file paths
-  const videoFilePathsTarget = [];
-  videoFilePaths.forEach((file) => {
-    videoFilePathsTarget.push(
-      file.replace(process.env.SOURCE_DIR, process.env.TARGET_DIR + today + '/')
-    );
-  });
+  // const videoFilePathsTarget = [];
+  // videoFilePaths.forEach((file) => {
+  //   videoFilePathsTarget.push(
+  //     file.replace(process.env.SOURCE_DIR, process.env.TARGET_DIR + today + '/')
+  //   );
+  // });
 
   return {
     videoFolders,
     videoPaths,
     videoFiles,
     videoFilePaths,
-    videoFilePathsTarget,
+    // videoFilePathsTarget,
+    dcimDirPath,
   };
 };

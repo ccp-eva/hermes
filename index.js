@@ -6,29 +6,49 @@ import { fullProcess } from './fullProcess.js';
 
 global.globals = init();
 
-const choices = [
+const mainChoices = [
   'Backup, Clean Source Directory, Video Compression',
-  '  Single Steps (Backup Clean Source Directory (SD Card), Video Compression (if Target contains videos not in Cloud)',
+  '  Single Steps',
   'Parity Check (Target and Cloud)',
   'Upload Parity List',
   'Update Script',
   'Exit',
 ];
 
-async function question() {
+async function mainQuestion() {
   const answer = await inquirer.prompt({
     type: 'list',
-    name: 'question',
-    message: 'What do want to do?\n',
-    choices,
+    name: 'mainQuestion',
+    message: 'What do want to do?',
+    choices: mainChoices,
   });
 
-  return handleAnswer(answer.question);
+  return handleAnswer(answer.mainQuestion);
 }
-await question();
+await mainQuestion();
+
+async function singleSteps() {
+  const answer = await inquirer.prompt({
+    type: 'list',
+    name: 'singleSteps',
+    message: 'Every operation can be executed in a single step. Which one?',
+    choices: [
+      'Backup',
+      'Clean source directory (removes *BPHH* folders on SD Card)',
+      'Video Compression (only if target folder contains videos which are not present in cloud)',
+      'Exit',
+    ],
+  });
+
+  return handleAnswer(answer.singleSteps);
+}
 
 async function handleAnswer(response) {
-  if (response === choices[0]) {
+  if (response === mainChoices[0]) {
     await fullProcess();
+  }
+
+  if (response === mainChoices[1]) {
+    await singleSteps();
   }
 }

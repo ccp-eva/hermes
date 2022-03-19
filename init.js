@@ -14,13 +14,8 @@ export const init = () => {
   );
 
   // run prechecks, get files and directories as in .env
-  const {
-    videoFolders,
-    videoPaths,
-    videoFiles,
-    videoFilePaths,
-    videoFilePathsTarget,
-  } = checkDirectories();
+  const { videoFolders, videoPaths, videoFiles, videoFilePaths, dcimDirPath } =
+    checkDirectories();
 
   console.log(
     chalk.dim(
@@ -37,6 +32,6 @@ export const init = () => {
     videoPaths,
     videoFiles,
     videoFilePaths,
-    videoFilePathsTarget,
+    dcimDirPath,
   };
 };
