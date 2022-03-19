@@ -19,6 +19,38 @@ export const checkDirectories = () => {
     process.exit(0);
   }
 
+  // get all sub directories in source
+  const subSourceDirs = fs
+    .readdirSync(process.env.SOURCE_DIR, {
+      withFileTypes: true,
+    })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name)
+    .map((dir) => process.env.SOURCE_DIR + dir + '/');
+
+  // search for DCIM folders within subSourceDirs
+  let dcimDir = [];
+  subSourceDirs.forEach((dir) => {
+    if (fs.existsSync(dir + 'DCIM/')) {
+      dcimDir.push(dir + 'DCIM/');
+    }
+  });
+
+  // if there are multiple folders report a warning
+  if (dcimDir.length > 1) {
+    console.error(
+      chalk.yellow.bold('WARNING\n\n') +
+        'Multiple DCIM folders found! ' +
+        'There are too many drives connected to the computer.\n' +
+        'Please connect ' +
+        chalk.bold('only one drive containing your video files.') +
+        '\n'
+    );
+    process.exit(0);
+  }
+
+  dcimDir = dcimDir[0];
+
   if (!fs.existsSync(process.env.TARGET_DIR)) {
     console.error(
       `${chalk.white.bgRed.bold('I cannot find the directory:')} ${
@@ -49,14 +81,14 @@ export const checkDirectories = () => {
 
   // get all video folder matching the pattern defined in .env
   const videoFolders = fs
-    .readdirSync(process.env.SOURCE_DIR)
+    .readdirSync(dcimDir)
     .filter((i) => i.includes(process.env.VIDEO_DIR_PATTERN));
 
   if (videoFolders.length === 0) {
     console.error(
       `I cannot find any directories containing: '${
         process.env.VIDEO_DIR_PATTERN
-      }' at ${process.env.SOURCE_DIR}
+      }' at ${dcimDir}
     
     ${chalk.bold('Is your SD card empty?')}
 
@@ -69,7 +101,7 @@ export const checkDirectories = () => {
     process.exit(0);
   }
 
-  const videoPaths = videoFolders.map((i) => process.env.SOURCE_DIR + i);
+  const videoPaths = videoFolders.map((i) => dcimDir + i);
 
   const videoFilePaths = [];
   const videoFiles = [];
