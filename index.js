@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
+import { init } from './init.js';
 import { fullProcess } from './fullProcess.js';
 
-console.clear();
+global.globals = init();
 
 // iso 8601 date string without time (YYYY-MM-DD)
 global.today = new Date().toISOString().substring(0, 10);
