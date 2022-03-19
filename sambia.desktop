@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=CCP Sambia Backup
-Exec=bash -c 'cd ~/cli-backup/; node index.js'
+Exec=bash -c 'cd ~/cli-backup/; node index.js;$SHELL'
 Terminal=true
 Type=Application
 Icon=/home/gast/.icons/ccporb.png
