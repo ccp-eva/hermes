@@ -5,3 +5,5 @@
 ## Requirements
 
 - nodejs
+- rsync
+- ffmpeg
