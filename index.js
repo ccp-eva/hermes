@@ -2,27 +2,25 @@
 
 import inquirer from 'inquirer';
 import { init } from './init.js';
+import { choices } from './choices.js';
 import { fullProcess } from './fullProcess.js';
+import {
+  singleBackup,
+  singleCleanSource,
+  singleVideoCompression,
+} from './singleSteps.js';
 
 global.globals = init();
-
-const mainChoices = [
-  'Backup, Clean Source Directory, Video Compression',
-  '  Single Steps',
-  'Parity Check (Target and Cloud)',
-  'Upload Parity List',
-  'Exit',
-];
 
 async function mainQuestion() {
   const answer = await inquirer.prompt({
     type: 'list',
     name: 'mainQuestion',
     message: 'What do want to do?',
-    choices: mainChoices,
+    choices: choices.main,
   });
 
-  return handleAnswer(answer.mainQuestion);
+  return handleMainAnswers(answer.mainQuestion);
 }
 await mainQuestion();
 
@@ -31,29 +29,35 @@ async function singleSteps() {
     type: 'list',
     name: 'singleSteps',
     message: 'Every operation can be executed in a single step. Which one?',
-    choices: [
-      'Backup',
-      'Clean source directory (removes *BPHH* folders on SD Card)',
-      'Video Compression (only if target folder contains videos which are not present in cloud)',
-      'Exit',
-    ],
+    choices: choices.single,
   });
 
-  return handleAnswer(answer.singleSteps);
+  return handleSingleAnswers(answer.singleSteps);
 }
 
-async function handleAnswer(response) {
-  if (response === mainChoices[0]) {
+async function handleMainAnswers(response) {
+  if (response === choices.main[0]) {
     await fullProcess();
   }
 
-  if (response === mainChoices[1]) {
+  if (response === choices.main[1]) {
     await singleSteps();
   }
 
-  if (response === mainChoices[2]) {
+  if (response === choices.main[2]) {
+  }
+}
+
+async function handleSingleAnswers(response) {
+  if (response === choices.single[0]) {
+    await singleBackup();
   }
 
-  if (response === mainChoices[3]) {
+  if (response === choices.single[1]) {
+    await singleCleanSource;
+  }
+
+  if (response === choices.single[2]) {
+    await singleVideoCompression;
   }
 }
