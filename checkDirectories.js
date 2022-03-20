@@ -11,7 +11,7 @@ export const checkDirectories = () => {
         process.env.SOURCE_DIR +
         '\n\n' +
         chalk.bold('    Is the SD card mounted?\n\n') +
-        chalk.bold('    Is the path correct in .env?\n')
+        chalk.dim('    Is the path correct in .env?\n')
     );
 
     sourceIsEmpty = true;
@@ -62,7 +62,7 @@ export const checkDirectories = () => {
     
     ${chalk.bold('Is the external hard drived mounted?\n')}
     
-    ${chalk.bold('Is the path correct in .env?')}
+    ${chalk.dim('Is the path correct in .env?')}
     `
     );
 
@@ -75,7 +75,7 @@ export const checkDirectories = () => {
         process.env.CLOUD_DIR
       }
     
-    ${chalk.bold('Is the path correct in .env?')}
+    ${chalk.dim('Is the path correct in .env?')}
     `
     );
 
@@ -102,7 +102,7 @@ export const checkDirectories = () => {
     
     ${chalk.bold('Is your SD card empty?')}
 
-    ${chalk.bold(
+    ${chalk.dim(
       'Check if the pattern on your SD card matches the one defined in .env'
     )}
     `
