@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 import { init } from './init.js';
 import { choices } from './choices.js';
 import { fullProcess } from './fullProcess.js';
+import { parityCheck } from './parityCheck.js';
 import {
   singleBackup,
   singleCleanSource,
@@ -28,7 +29,7 @@ async function singleSteps() {
   const answer = await inquirer.prompt({
     type: 'list',
     name: 'singleSteps',
-    message: 'Every operation can be executed in a single step. Which one?',
+    message: 'Which single step?',
     choices: choices.single,
   });
 
@@ -45,6 +46,7 @@ async function handleMainAnswers(response) {
   }
 
   if (response === choices.main[2]) {
+    parityCheck();
   }
 }
 
@@ -54,10 +56,10 @@ async function handleSingleAnswers(response) {
   }
 
   if (response === choices.single[1]) {
-    await singleCleanSource;
+    await singleCleanSource();
   }
 
   if (response === choices.single[2]) {
-    await singleVideoCompression;
+    await singleVideoCompression();
   }
 }
