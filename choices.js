@@ -6,9 +6,9 @@ export const choices = {
     'Exit',
   ],
   single: [
-    'Backup',
-    'Clean source directory (removes *BPHH* folders on SD Card)',
-    'Video Compression (only if target folder contains videos which are not present in cloud)',
+    'Backup SD card to external drive',
+    'Clean source directory (removes *BPHH* folders on SD card)',
+    'Parity check & video compression (compress videos which are not present in cloud folder)',
     'Exit',
   ],
 };
