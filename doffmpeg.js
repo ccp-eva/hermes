@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import ffmpeg from 'fluent-ffmpeg';
 import fs from 'fs';
 import path from 'path';

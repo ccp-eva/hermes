@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import Rsync from 'rsync';
 import { createDateDirectory } from './createDateDir.js';
 

@@ -1,6 +1,5 @@
 import fs from 'fs';
 import chalk from 'chalk';
-import 'dotenv/config';
 
 export const checkDirectories = () => {
   if (!fs.existsSync(process.env.SOURCE_DIR)) {
