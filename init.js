@@ -9,23 +9,38 @@ export const init = () => {
   global.today = new Date().toISOString().substring(0, 10);
 
   console.log(
-    chalk.blue.bold('CCP Sambia Backup') +
-      ` ${chalk.dim('— Today’s Timestamp: ' + today)}\n`
+    chalk.blue.bold('🌬 CCP Hermes Backup') +
+      ' — ' +
+      chalk.greenBright('Zambia Branch') +
+      ' — ' +
+      ` ${chalk.dim('Today’s Timestamp: ' + today)}\n`
   );
 
   // run prechecks, get files and directories as in .env
-  const { videoFolders, videoPaths, videoFiles, videoFilePaths, dcimDirPath } =
-    checkDirectories();
+  const {
+    videoFolders,
+    videoPaths,
+    videoFiles,
+    videoFilePaths,
+    dcimDirPath,
+    sourceIsEmpty,
+  } = checkDirectories();
 
-  console.log(
-    chalk.dim(
-      `✔ All directories set! Found ${pluralize(
-        videoFolders.length,
-        'folder'
-      )} at source location → ${videoFolders}
+  sourceIsEmpty
+    ? console.log(
+        `${chalk.bold.greenBright(
+          '    You can still perform a target/cloud parity check and video compression tasks.\n'
+        )}`
+      )
+    : console.log(
+        chalk.dim(
+          `✔ All directories set! Found ${pluralize(
+            videoFolders.length,
+            'folder'
+          )} at source location → ${videoFolders}
   containing a total of ${pluralize(videoFiles.length, 'video')}.\n`
-    )
-  );
+        )
+      );
 
   return {
     videoFolders,
@@ -33,5 +48,6 @@ export const init = () => {
     videoFiles,
     videoFilePaths,
     dcimDirPath,
+    sourceIsEmpty,
   };
 };

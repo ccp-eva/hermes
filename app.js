@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { init } from './init.js';
 import { choices } from './choices.js';
 import { fullProcess } from './fullProcess.js';
-import { parityCheck } from './parityCheck.js';
+// import { parityCheck } from './parityCheck.js';
 import {
   singleBackup,
   singleCleanSource,
@@ -13,17 +13,32 @@ import {
 
 global.globals = init();
 
-async function mainQuestion() {
-  const answer = await inquirer.prompt({
-    type: 'list',
-    name: 'mainQuestion',
-    message: 'What do want to do?',
-    choices: choices.main,
-  });
+// check if sourceisEmpty
+if (globals.sourceIsEmpty) {
+  async function emptySourceQuestions() {
+    const answer = await inquirer.prompt({
+      type: 'list',
+      name: 'emptySourceQuestions',
+      message: 'What do want to do?',
+      choices: choices.emptySource,
+    });
 
-  return handleMainAnswers(answer.mainQuestion);
+    return handleMainAnswers(answer.emptySourceQuestions);
+  }
+  await emptySourceQuestions();
+} else {
+  async function mainQuestion() {
+    const answer = await inquirer.prompt({
+      type: 'list',
+      name: 'mainQuestion',
+      message: 'What do want to do?',
+      choices: choices.main,
+    });
+
+    return handleMainAnswers(answer.mainQuestion);
+  }
+  await mainQuestion();
 }
-await mainQuestion();
 
 async function singleSteps() {
   const answer = await inquirer.prompt({
