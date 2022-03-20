@@ -16,8 +16,8 @@ export const fullProcess = async () => {
 
   console.log(chalk.dim('\n  === Cleaning SD Card'));
   for (const videoFolder of globals.videoPaths) {
-    console.log(chalk.green('✔') + ` Removing ${videoFolder}`);
     fs.rmSync(videoFolder, { recursive: true, force: true });
+    console.log(chalk.green('✔') + ` Removing ${videoFolder} 🎉`);
   }
 
   console.log(
