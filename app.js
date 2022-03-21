@@ -4,7 +4,7 @@ import inquirer from 'inquirer';
 import { init } from './init.js';
 import { choices } from './choices.js';
 import { fullProcess } from './fullProcess.js';
-// import { parityCheck } from './parityCheck.js';
+import { parityCheck } from './parityCheck.js';
 import {
   singleBackup,
   singleCleanSource,
@@ -23,7 +23,7 @@ if (globals.sourceIsEmpty) {
       choices: choices.emptySource,
     });
 
-    return handleMainAnswers(answer.emptySourceQuestions);
+    return handleEmptySourceAnswers(answer.emptySourceQuestions);
   }
   await emptySourceQuestions();
 } else {
@@ -76,5 +76,21 @@ async function handleSingleAnswers(response) {
 
   if (response === choices.single[2]) {
     await singleVideoCompression();
+  }
+}
+
+async function handleEmptySourceAnswers(response) {
+  if (response === choices.emptySource[0]) {
+    const missingCloudFiles = parityCheck();
+    console.log(
+      'Following files are missing in the cloud which are present in the target:'
+    );
+    console.table(missingCloudFiles);
+
+    console.log('Consider running video compression from menu');
+  }
+
+  if (response === choices.emptySource[1]) {
+    console.log('video compression');
   }
 }
