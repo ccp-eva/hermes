@@ -7,6 +7,8 @@ export const init = () => {
 
   // iso 8601 date string without time (YYYY-MM-DD)
   global.today = new Date().toISOString().substring(0, 10);
+  global.time = new Date().toISOString().substring(11, 16).replaceAll(':', '-');
+  global.sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
   console.log(
     chalk.blue.bold('🌬 CCP Hermes Backup') +

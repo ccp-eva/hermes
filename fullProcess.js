@@ -14,6 +14,32 @@ export const fullProcess = async () => {
   await backup(globals.videoPaths);
   spinner.success({ text: 'Backup Complete 🎉' });
 
+  // get target file paths and file names
+  let videoFilePathsTarget = getVideoFilePathsTarget(
+    process.env.TARGET_DIR + today
+  );
+
+  // today maybe later (add hh-mm timestamp on target folders)
+  // console.log(videoFilePathsTarget);
+
+  // let uniqueParents = videoFilePathsTarget.map((dir) =>
+  //   dir.substr(0, dir.lastIndexOf('/'))
+  // );
+  // uniqueParents = [...new Set(uniqueParents)];
+
+  // spinner.start({ text: 'Adding Timestamp...⏱️' });
+  // uniqueParents.map((dir) => {
+  //   fs.renameSync(dir, dir + '-' + time);
+  // });
+  // spinner.success({ text: 'Done 🎉' });
+
+  // // get target file paths and file names
+  // sleep();
+  // console.log(uniqueParents);
+  // // const uniqueParentsFiles = getVideoFilePathsTarget(uniqueParents);
+
+  // // console.log(uniqueParentsFiles);
+
   console.log(chalk.dim('\n  === Cleaning SD Card'));
   for (const videoFolder of globals.videoPaths) {
     fs.rmSync(videoFolder, { recursive: true, force: true });
@@ -22,11 +48,6 @@ export const fullProcess = async () => {
 
   console.log(
     chalk.dim('\n  === Compress videos from external drive to cloud')
-  );
-
-  // get target file paths and file names
-  const videoFilePathsTarget = getVideoFilePathsTarget(
-    process.env.TARGET_DIR + today + '/'
   );
 
   const subSpinner = createSpinner();
