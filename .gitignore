@@ -1,5 +1,6 @@
 # my stuff
 source/
+target/
 *.mp4
 *.MTS
 
