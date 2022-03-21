@@ -60,6 +60,15 @@ export const parityCheck = () => {
   } catch (err) {
     console.log(err, 'An error occured while writing JSON Object to File.');
   }
+  try {
+    fs.writeFileSync(
+      'missingcloudfiles.json',
+      JSON.stringify({ missingCloudFiles })
+    );
+    console.log('missingcloudfiles.json written');
+  } catch (err) {
+    console.log(err, 'An error occured while writing JSON Object to File.');
+  }
 
   return missingCloudFiles;
 };

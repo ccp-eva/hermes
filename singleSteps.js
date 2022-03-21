@@ -24,19 +24,18 @@ export const singleCleanSource = async () => {
 
 export const singleVideoCompression = async () => {
   // read inventory.json from disk
-  const inventory = JSON.parse(fs.readFileSync('inventory.json'));
-
-  // https://stackoverflow.com/a/33034768/2258480
-  const missingCloudFiles = inventory.target.filter(
-    (i) => !inventory.cloud.includes(i)
+  const { missingCloudFiles } = JSON.parse(
+    fs.readFileSync('missingcloudfiles.json')
   );
+
+  console.log(missingCloudFiles);
 
   const subSpinner = createSpinner();
   for (const [i, vid] of missingCloudFiles.entries()) {
     subSpinner.start({
       text: `Video ${i + 1} of ${missingCloudFiles.length}`,
     });
-    await doffmpeg(process.env.TARGET_DIR + vid);
+    await doffmpeg(vid);
     subSpinner.success({
       text: `Video ${i + 1} of ${missingCloudFiles.length} 🎉`,
     });
