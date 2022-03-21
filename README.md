@@ -6,7 +6,7 @@
 
 ---
 
-## Demo
+## Demos
 
 todo gif/mp4 and and visualization
 
