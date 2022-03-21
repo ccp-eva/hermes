@@ -3,7 +3,7 @@ source/
 target/
 *.mp4
 *.MTS
-inventory.json
+*.json
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/linux,macos,windows,visualstudiocode,node

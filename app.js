@@ -119,6 +119,6 @@ async function handleEmptySourceAnswers(response) {
   }
 
   if (response === choices.emptySource[1]) {
-    singleVideoCompression();
+    await singleVideoCompression();
   }
 }
