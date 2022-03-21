@@ -41,9 +41,15 @@ export const parityCheck = () => {
   const cloudInventoryLower = cloudInventory.map((i) => i.toLowerCase());
 
   // https://stackoverflow.com/a/33034768/2258480
-  const missingCloudFiles = targetInventoryLower.filter(
-    (i) => !cloudInventoryLower.includes(i)
-  );
+  let missingEntries = [];
+  let missingCloudFiles = targetInventoryLower.filter((i) => {
+    missingEntries.push(!cloudInventoryLower.includes(i));
+    return !cloudInventoryLower.includes(i);
+  });
+
+  missingEntries = [...missingEntries.keys()].filter((i) => missingEntries[i]);
+  missingCloudFiles = [];
+  missingEntries.map((i) => missingCloudFiles.push(targetFilePaths[i]));
 
   try {
     fs.writeFileSync(
