@@ -61,7 +61,17 @@ async function handleMainAnswers(response) {
   }
 
   if (response === choices.main[2]) {
-    parityCheck();
+    const missingCloudFiles = parityCheck();
+    if (missingCloudFiles.length > 0) {
+      console.log(
+        'Following files are missing in the cloud which are present in the target:'
+      );
+      console.table(missingCloudFiles);
+
+      console.log('Consider running video compression from menu');
+    } else {
+      console.log('No missing files');
+    }
   }
 }
 
@@ -71,26 +81,44 @@ async function handleSingleAnswers(response) {
   }
 
   if (response === choices.single[1]) {
-    await singleCleanSource();
+    const missingCloudFiles = parityCheck();
+    if (missingCloudFiles.length > 0) {
+      console.log(
+        'Following files are missing in the cloud which are present in the target:'
+      );
+      console.table(missingCloudFiles);
+
+      console.log('Consider running video compression from menu');
+    } else {
+      console.log('No missing files');
+    }
   }
 
   if (response === choices.single[2]) {
     await singleVideoCompression();
+  }
+
+  if (response === choices.single[3]) {
+    await singleCleanSource();
   }
 }
 
 async function handleEmptySourceAnswers(response) {
   if (response === choices.emptySource[0]) {
     const missingCloudFiles = parityCheck();
-    console.log(
-      'Following files are missing in the cloud which are present in the target:'
-    );
-    console.table(missingCloudFiles);
+    if (missingCloudFiles.length > 0) {
+      console.log(
+        'Following files are missing in the cloud which are present in the target:'
+      );
+      console.table(missingCloudFiles);
 
-    console.log('Consider running video compression from menu');
+      console.log('Consider running video compression from menu');
+    } else {
+      console.log('No missing files');
+    }
   }
 
   if (response === choices.emptySource[1]) {
-    console.log('video compression');
+    singleVideoCompression();
   }
 }

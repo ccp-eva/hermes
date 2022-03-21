@@ -23,15 +23,15 @@ export const parityCheck = () => {
   // filter out residual files (e.g., DS_STORE et al.)
   // specifically we only look for mp4/MTS extensions!
   targetInventory = targetInventory.filter(
-    (i) => i.includes('.mp4') || i.includes('.MTS')
+    (i) => i.includes('.mp4') || i.includes('.MP4') || i.includes('.MTS')
   );
   cloudInventory = cloudInventory.filter(
-    (i) => i.includes('.mp4') || i.includes('.MTS')
+    (i) => i.includes('.mp4') || i.includes('.MP4') || i.includes('.MTS')
   );
 
   // https://stackoverflow.com/a/33034768/2258480
   const missingCloudFiles = targetInventory.filter(
-    (x) => !cloudInventory.includes(x)
+    (i) => !cloudInventory.includes(i)
   );
 
   try {

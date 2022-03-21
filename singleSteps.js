@@ -2,6 +2,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { createSpinner } from 'nanospinner';
 import { backup } from './backup.js';
+import { doffmpeg } from './doffmpeg.js';
 import { walkSync } from './walkSync.js';
 
 export const singleBackup = async () => {
@@ -21,4 +22,23 @@ export const singleCleanSource = async () => {
   }
 };
 
-export const singleVideoCompression = async () => {};
+export const singleVideoCompression = async () => {
+  // read inventory.json from disk
+  const inventory = JSON.parse(fs.readFileSync('inventory.json'));
+
+  // https://stackoverflow.com/a/33034768/2258480
+  const missingCloudFiles = inventory.target.filter(
+    (i) => !inventory.cloud.includes(i)
+  );
+
+  const subSpinner = createSpinner();
+  for (const [i, vid] of missingCloudFiles.entries()) {
+    subSpinner.start({
+      text: `Video ${i + 1} of ${missingCloudFiles.length}`,
+    });
+    await doffmpeg(process.env.TARGET_DIR + vid);
+    subSpinner.success({
+      text: `Video ${i + 1} of ${missingCloudFiles.length} 🎉`,
+    });
+  }
+};
