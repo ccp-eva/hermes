@@ -8,7 +8,7 @@
 
 ## Demo
 
-todo gif/mp4 and and visualization
+todo gif/mp4 and and visualizations
 
 ## What’s happening
 
