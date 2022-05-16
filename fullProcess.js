@@ -53,11 +53,13 @@ export const fullProcess = async () => {
   const subSpinner = createSpinner();
   for (const [i, vid] of videoFilePathsTarget.entries()) {
     subSpinner.start({
-      text: `Video ${i + 1} of ${videoFilePathsTarget.length}`,
+      text: `Video ${i + 1} of ${videoFilePathsTarget.length} (Input: ${vid})`,
     });
     await doffmpeg(vid);
     subSpinner.success({
-      text: `Video ${i + 1} of ${videoFilePathsTarget.length} 🎉`,
+      text: `Video ${i + 1} of ${
+        videoFilePathsTarget.length
+      } 🎉 (Input: ${vid})`,
     });
   }
 };

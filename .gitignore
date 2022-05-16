@@ -1,6 +1,7 @@
 # my stuff
 source/
 target/
+cloud/
 *.mp4
 *.MTS
 *.json
