@@ -1,5 +1,6 @@
 import fs from 'fs';
 import chalk from 'chalk';
+import path from 'path';
 
 export const checkDirectories = () => {
   let sourceIsEmpty = false;
@@ -121,6 +122,15 @@ export const checkDirectories = () => {
         videoFilePaths.push(dir + '/' + file);
       });
     });
+
+    // make sure only mp4 files are included
+    videoFiles = videoFiles.filter(
+      (file) => path.extname(file).toLowerCase() === '.mp4'
+    );
+    // make sure only mp4 files are included
+    videoFilePaths = videoFilePaths.filter(
+      (file) => path.extname(file).toLowerCase() === '.mp4'
+    );
   }
 
   return {

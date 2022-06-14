@@ -1,7 +1,7 @@
 {
   "name": "cli-backup",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Interactive CLI to backup files from external storage",
   "main": "app.js",
   "bin": "./app.js",
