@@ -125,11 +125,15 @@ export const checkDirectories = () => {
 
     // make sure only mp4 files are included
     videoFiles = videoFiles.filter(
-      (file) => path.extname(file).toLowerCase() === '.mp4'
+      (file) =>
+        path.extname(file).toLowerCase() === '.mp4'  ||
+        path.extname(file).toLowerCase() === '.mts'
     );
     // make sure only mp4 files are included
     videoFilePaths = videoFilePaths.filter(
-      (file) => path.extname(file).toLowerCase() === '.mp4'
+      (file) =>
+        path.extname(file).toLowerCase() === '.mp4'  ||
+        path.extname(file).toLowerCase() === '.mts'
     );
   }
 
