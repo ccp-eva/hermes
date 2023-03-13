@@ -4,6 +4,9 @@ import { createDateDirectory } from './createDateDir.js';
 export const backup = (videoPaths) => {
   const rsync = new Rsync();
   rsync.flags('avzP');
+  rsync.include('*/'); // include current directory (important)
+  rsync.include(['*.mp4', '*.MP4', '*.mts', '*.MTS']);
+  rsync.exclude('*');
   rsync.source(videoPaths);
   rsync.destination(createDateDirectory());
 

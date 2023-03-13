@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=CCP Sambia Backup
-Exec=bash -c 'cd ~/cli-backup/; node app.js;$SHELL'
+Exec=bash -c 'cd ~/Nextcloud/hermes/; node .;$SHELL'
 Terminal=true
 Type=Application
 Icon=/home/gast/.icons/ccporb.png
