@@ -8,16 +8,7 @@
 
 ## Demos
 
-todo gif/mp4 and and visualizations
-
-## What’s happening
-
-### March/April 2022
-
-- refactoring and cleaning up
-- documentaion
-- generalization (now it is an explicit use case)
-- npm release
+https://github.com/ccp-eva/hermes/assets/9831678/e5290140-0621-456a-9751-b866c7763f4b
 
 ## Requirements
 
